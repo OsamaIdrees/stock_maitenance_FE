@@ -1,0 +1,72 @@
+.login_user_div{
+    background-color: black;
+    color: white;
+    padding: 2%;
+}
+.login_user_name{
+    text-align: right;
+    font-size: 1.5rem;
+}
+.log_out_button{
+    background-color: white;
+    color: black;
+    width: max-content;
+    padding: 0.5%;
+    border-radius: 10px;
+    margin-left: 2%;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.main_div{
+    margin: 15% 4% 15% 4%;
+}
+.outer_div{
+    width: 33%;
+    float: left;
+    color: white;
+    font-size: 3rem;
+    font-family: 'Prompt';
+    cursor: pointer;
+}
+.product_insertion{
+    background-color: green;
+    margin-right: 3%;
+    padding: 20% 2% 20% 2%;
+    border-radius: 14px;
+    border: 1px solid transparent;
+}
+.stock_updation{
+    background-color: red;
+    margin-right: 3%;
+    padding: 20% 2% 20% 2%;
+    border-radius: 14px;
+    border: 1px solid transparent;
+
+}
+.view_stock{
+    background-color: blue;
+    padding: 20% 2% 20% 2%;
+    border-radius: 14px;
+    border: 1px solid transparent;
+}
+.product_insertion:hover{
+    background-color: white;
+    color: green;
+    border-color: green;
+}
+.stock_updation:hover{
+         background-color: white;
+        color: red;
+        border-color: red;
+}
+.view_stock:hover{
+    background-color: white;
+    color: blue;
+    border-color: blue;
+}
+@media only screen and (max-width:967px){
+    .outer_div{
+        width: 100%;
+        margin-bottom: 5%;
+    }
+}
