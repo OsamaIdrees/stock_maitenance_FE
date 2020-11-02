@@ -1,23 +1,50 @@
 {
   "name": "stock_maintenance_fe",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "main": "public/electron.js",
+  "author": "Osama Idrees",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "app-builder-bin": "^3.5.10",
+    "concurrently": "^5.3.0",
+    "electron-updater": "^4.3.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "sweetalert2": "^10.8.1",
-    "web-vitals": "^0.2.4"
+    "wait-on": "^5.2.0",
+    "web-vitals": "^0.2.4",
+    "electron-is-dev": "^1.2.0"
+  },
+  "devDependencies": {
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/electron.js",
+    "preelectron-package": "npm run build"
+    
+  },
+  "build": {
+    "appId": "com.loyno-mathcs.OsamaIdrees.weatherstation.wotdevice",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "*.js", "public"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [

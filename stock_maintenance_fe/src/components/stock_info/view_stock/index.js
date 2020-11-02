@@ -14,6 +14,11 @@ const ViewStock = () =>{
     const [productStock,setProductStock] = React.useState('')
     const [upatedAt,setUpdatedAt] = React.useState('')
     const [tableShow,setTableShow] = React.useState(false)
+    const [productSaleSoFar,setProductSaleSoFar] = React.useState('')
+    const [revenueEarned,setRevenueEarned] = React.useState('')
+    const [profitEarned,setProfitEarned] = React.useState('')
+    const [showRevenue,setShowRevenue] = React.useState(false)
+    const [perDaySale,setPerDaySale] = React.useState('')
     useEffect(()=>{
         getProductName()
     },[])
@@ -63,6 +68,7 @@ const ViewStock = () =>{
         }).then(response=>{
             return response.json()
         }).then((data)=>{
+            console.log(data)
            if(data.status === true){
                setTableShow(true)
                data['product_detail'].map(detail=>{
@@ -73,7 +79,37 @@ const ViewStock = () =>{
                data['stock_info'].map(stock=>{
                    setProductStock(stock['stock'])
                    setUpdatedAt(stock['updated_at'])
+                   
                })
+           }
+           if(data.sub_result === true){
+               const temp = []
+                data['product_sell_record'].map(result=>{
+                    setShowRevenue(true)
+                    setProductSaleSoFar(result['sell_record'])
+                    setRevenueEarned(result['revenue_earned'])
+                    setProfitEarned(result['profit_earned'])
+                })
+                data['per_day_sale'].map(per_day_sale=>{
+                    
+                    
+                    temp.push(<tr className={classess.row_styling}>
+                        <td>
+                            {per_day_sale['stock_sell']}
+                        </td>
+                        <td>
+                            {per_day_sale['average_price']}
+                        </td>
+                        <td>
+                            {per_day_sale['Date']}
+                        </td>
+                    </tr>
+                    )
+                 
+                
+                })
+                setPerDaySale(temp)
+                
            }
         })
       
@@ -129,6 +165,65 @@ const ViewStock = () =>{
                     </tr>
                 </table>
             </div>
+            
+
+            :
+            null
+            }
+          
+              {
+                showRevenue === true?<React.Fragment>
+                      <div className={classess.heading_style}>
+                                 Sale & Revenue
+                     </div>
+                    <div className={classess.table_div}>
+                <table rules="cols" className={classess.table_styling}>
+                    <tr className={classess.heading_styling}>
+                        <th>
+                            Sale So Far
+                        </th>
+                        <th>
+                            Revenue Earned 
+                        </th>
+                        <th>
+                            Profit Earned
+                        </th>
+                    </tr>
+                    <tr className={classess.row_styling}>
+                        <td>
+                            {productSaleSoFar}
+                        </td>
+                        <td>
+                            {revenueEarned}
+                        </td>
+                        <td>
+                            {profitEarned}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div className={classess.heading_style}>
+                                 Per Day Sale Record
+                     </div>
+                    <div className={classess.table_div}>
+                <table rules="cols" className={classess.table_styling}>
+                    <tr className={classess.heading_styling}>
+                        <th>
+                            Item Sell
+                        </th>
+                        <th>
+                            Average Selling Price 
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                  {perDaySale}
+                 
+                </table>
+            </div>
+            </React.Fragment>
+
             :
             null
             }

@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter,Switch,Route} from 'react-router-dom';
+import {BrowserRouter,Switch,Route,HashRouter} from 'react-router-dom';
 import MainPage from './components/main_page/index'
 import StockInfo from './components/stock_info/index'
 import ProductInserttion from './components/stock_info/product_insertion/index';
@@ -7,7 +7,7 @@ import ProductUpdation from './components/stock_info/product_updation/index'
 import ViewStock from './components/stock_info/view_stock/index'
 const App = () =>{
   return (
-  <BrowserRouter>
+  <HashRouter>
       <div className="App">
           <Switch>
             <Route exact path = "/" component = {MainPage} />
@@ -17,7 +17,7 @@ const App = () =>{
             <Route exact path = "/view-stock" component={ViewStock}/>
           </Switch>
       </div>
-  </BrowserRouter>
+  </HashRouter>
 
   );
 }

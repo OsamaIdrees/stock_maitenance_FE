@@ -41,6 +41,11 @@
     font-size: 1.2rem;
     font-weight: 500;
 }
+.heading_style{
+    color: purple;
+    font-size: 2.5rem;
+
+}
 @media only screen and (max-width:967px){
     .submit_button_styling{
         font-size: 1rem;
