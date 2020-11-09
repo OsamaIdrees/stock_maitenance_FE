@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Header from '../header/index'
 import classess from './style.module.css'
 import Swal from 'sweetalert2'
+
 const ViewStock = () =>{
     const history = useHistory()
     const productName = []
@@ -19,6 +20,7 @@ const ViewStock = () =>{
     const [profitEarned,setProfitEarned] = React.useState('')
     const [showRevenue,setShowRevenue] = React.useState(false)
     const [perDaySale,setPerDaySale] = React.useState('')
+    const [stockIn,setStockIn] = React.useState('')
     useEffect(()=>{
         getProductName()
     },[])
@@ -70,6 +72,7 @@ const ViewStock = () =>{
         }).then((data)=>{
             console.log(data)
            if(data.status === true){
+               const store_in = []
                setTableShow(true)
                data['product_detail'].map(detail=>{
                 setProductId(detail['id'])
@@ -81,6 +84,22 @@ const ViewStock = () =>{
                    setUpdatedAt(stock['updated_at'])
                    
                })
+             data['stock_in_record'].map(stock_in=>{
+                 store_in.push(<tr className={classess.row_styling}>
+                     <td>
+                         {
+                             stock_in['stock_in']
+                         }
+                     </td>
+                     <td>
+                         {stock_in['cost_price']}
+                     </td>
+                     <td>
+                         {stock_in['Date']}
+                     </td>
+                 </tr>)
+             })
+               setStockIn(store_in)
            }
            if(data.sub_result === true){
                const temp = []
@@ -127,7 +146,9 @@ const ViewStock = () =>{
                 </form>
             </div>
             {
-                tableShow === true?<div className={classess.table_div}>
+                tableShow === true?
+                <React.Fragment>
+                <div className={classess.table_div}>
                 <table rules="cols" className={classess.table_styling}>
                     <tr className={classess.heading_styling}>
                         <th>
@@ -165,7 +186,27 @@ const ViewStock = () =>{
                     </tr>
                 </table>
             </div>
-            
+            <div className={classess.heading_style}>
+                                 Stock In Record
+            </div>
+            <div className={classess.table_div}>
+                <table rules="cols" className={classess.table_styling}>
+                    <tr className={classess.heading_styling}>
+                        <th>
+                            Stock In
+                        </th>
+                        <th>
+                            Cost  Price
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                        {stockIn}
+                    
+                </table>
+            </div>
+           </React.Fragment> 
 
             :
             null
@@ -227,7 +268,7 @@ const ViewStock = () =>{
             :
             null
             }
-            
+     
         </React.Fragment>
     )
 }
