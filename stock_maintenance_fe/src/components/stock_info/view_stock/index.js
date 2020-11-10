@@ -15,12 +15,10 @@ const ViewStock = () =>{
     const [productStock,setProductStock] = React.useState('')
     const [upatedAt,setUpdatedAt] = React.useState('')
     const [tableShow,setTableShow] = React.useState(false)
-    const [productSaleSoFar,setProductSaleSoFar] = React.useState('')
-    const [revenueEarned,setRevenueEarned] = React.useState('')
-    const [profitEarned,setProfitEarned] = React.useState('')
     const [showRevenue,setShowRevenue] = React.useState(false)
     const [perDaySale,setPerDaySale] = React.useState('')
     const [stockIn,setStockIn] = React.useState('')
+    const [profitHistory,setProfitHistory] = React.useState('')
     useEffect(()=>{
         getProductName()
     },[])
@@ -103,12 +101,26 @@ const ViewStock = () =>{
            }
            if(data.sub_result === true){
                const temp = []
+               const hold_profit_record = []
                 data['product_sell_record'].map(result=>{
                     setShowRevenue(true)
-                    setProductSaleSoFar(result['sell_record'])
-                    setRevenueEarned(result['revenue_earned'])
-                    setProfitEarned(result['profit_earned'])
+                    hold_profit_record.push(<tr className={classess.row_styling}>
+                        <td>
+                            {result['sell_record']}
+                        </td>
+                        <td>
+                            {result['revenue_earned']}
+                        </td>
+                        <td>
+                            {result['profit_earned']}
+                        </td>
+                        <td>
+                            {result['last_updated']}
+                        </td>
+                    </tr>)
+               
                 })
+                setProfitHistory(hold_profit_record)
                 data['per_day_sale'].map(per_day_sale=>{
                     
                     
@@ -215,13 +227,13 @@ const ViewStock = () =>{
               {
                 showRevenue === true?<React.Fragment>
                       <div className={classess.heading_style}>
-                                 Sale & Revenue
+                                 Sale & Revenue (Monthy)
                      </div>
                     <div className={classess.table_div}>
                 <table rules="cols" className={classess.table_styling}>
                     <tr className={classess.heading_styling}>
                         <th>
-                            Sale So Far
+                            Item Sell
                         </th>
                         <th>
                             Revenue Earned 
@@ -229,18 +241,12 @@ const ViewStock = () =>{
                         <th>
                             Profit Earned
                         </th>
+                        <th>
+                            Last Updated
+                        </th>
                     </tr>
-                    <tr className={classess.row_styling}>
-                        <td>
-                            {productSaleSoFar}
-                        </td>
-                        <td>
-                            {revenueEarned}
-                        </td>
-                        <td>
-                            {profitEarned}
-                        </td>
-                    </tr>
+                    {profitHistory}
+              
                 </table>
             </div>
             <div className={classess.heading_style}>
